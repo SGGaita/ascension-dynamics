@@ -53,6 +53,9 @@ export default function SiteHeader({ settings, overlay: overlayProp, phone = CON
           bgcolor: inverse ? "transparent" : `${t.bg}E6`,
           backdropFilter: inverse ? "none" : "saturate(160%) blur(14px)",
           borderBottom: `1px solid ${inverse ? "transparent" : t.line}`,
+          animation: "ad-header-in .9s cubic-bezier(.2,.7,.2,1) .05s both",
+          "@keyframes ad-header-in": { from: { opacity: 0, transform: "translateY(-24px)" }, to: { opacity: 1, transform: "none" } },
+          "@media (prefers-reduced-motion: reduce)": { animation: "none" },
           // Sit inside the inset hero card while at the top of the homepage
           pt: inverse ? { xs: 1.25, md: 2.5 } : 0,
           transition: "background-color .35s, border-color .35s, padding .35s",
@@ -70,7 +73,7 @@ export default function SiteHeader({ settings, overlay: overlayProp, phone = CON
               <BrandLogo height={logoHeight} src={settings?.logoUrl} companyName={settings?.companyName} inverse={inverse} />
             </Box>
 
-            {/* centre nav — a floating glass pill over the hero, flat once scrolled */}
+            {/* centre nav - a floating glass pill over the hero, flat once scrolled */}
             <Box
               component="nav"
               sx={{

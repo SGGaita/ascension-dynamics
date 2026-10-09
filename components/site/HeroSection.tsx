@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import { useDesign } from "@/components/DesignProvider";
 import { SOCIALS } from "@/lib/contact";
 import type { SiteSettings } from "@/lib/types";
-import { OutlinePill as Pill, SERIF, Squiggle } from "./ui";
+import { OutlinePill as Pill, SERIF, Squiggle, enter } from "./ui";
 
 /** Hero photos (self-hosted): wide shot for tablets/desktop, portrait crop for phones. */
 const PHOTO = {
@@ -24,7 +24,7 @@ const LEGACY_SUBTEXT = /architects high-performance|crafting research systems|en
 
 const DEFAULT_HEADLINE = "We design & build *websites|web & mobile apps|custom software*";
 const DEFAULT_SUBTEXT =
-  "From websites that win customers to web & mobile apps and the custom software that runs your business — we plan, design, build and look after digital products people love to use.";
+  "From websites that win customers to web & mobile apps and the custom software that runs your business - we plan, design, build and look after digital products people love to use.";
 const DEFAULT_EYEBROW = "Digital product studio";
 const HOLD_MS = 2800; // how long each phrase stays
 const OUT_MS = 420;   // exit animation length
@@ -174,27 +174,27 @@ export default function HeroSection({ hero }: { hero?: SiteSettings["hero"] }) {
 
         <Container maxWidth="xl" sx={{ position: "relative", px: { xs: 3, md: 7 }, pt: { xs: 13, md: 14 }, pb: { xs: 12, md: 12 } }}>
           <Box sx={{ maxWidth: 820 }}>
-            <Typography variant="overline" component="p" sx={{ color: "rgba(255,255,255,0.8)", mb: 2.5, display: "flex", alignItems: "center", gap: 1.25 }}>
+            <Typography variant="overline" component="p" sx={{ color: "rgba(255,255,255,0.8)", mb: 2.5, display: "flex", alignItems: "center", gap: 1.25, ...enter(150) }}>
               <Box component="span" sx={{ width: 7, height: 7, borderRadius: "50%", bgcolor: accent.color }} />
               {eyebrow}
             </Typography>
 
             <Typography
               variant="h1"
-              sx={{ color: "#fff", fontWeight: 700, fontSize: { xs: "2.7rem", sm: "3.6rem", md: "4.6rem", xl: "5.2rem" }, lineHeight: 1.02, mb: 3.5 }}
+              sx={{ color: "#fff", fontWeight: 700, fontSize: { xs: "2.7rem", sm: "3.6rem", md: "4.6rem", xl: "5.2rem" }, lineHeight: 1.02, mb: 3.5, ...enter(300, "translateY(40px)") }}
             >
               <Headline text={headline} />
             </Typography>
 
-            <Typography sx={{ fontSize: { xs: "1.02rem", md: "1.15rem" }, color: "rgba(255,255,255,0.85)", maxWidth: 560, mb: { xs: 5, md: 6 }, lineHeight: 1.7 }}>
+            <Typography sx={{ fontSize: { xs: "1.02rem", md: "1.15rem" }, color: "rgba(255,255,255,0.85)", maxWidth: 560, mb: { xs: 5, md: 6 }, lineHeight: 1.7, ...enter(520) }}>
               {subtext}
             </Typography>
 
-            {/* see our work — hand-drawn arrow, left aligned */}
+            {/* see our work - hand-drawn arrow, left aligned */}
             <Box
               component={Link}
               href="/#work"
-              sx={{ display: "inline-flex", alignItems: "flex-end", gap: 1.25, color: "#fff", textDecoration: "none", "&:hover span": { borderColor: "#fff" } }}
+              sx={{ display: "inline-flex", alignItems: "flex-end", gap: 1.25, color: "#fff", textDecoration: "none", "&:hover span": { borderColor: "#fff" }, ...enter(700) }}
             >
               <Squiggle />
               <Box component="span" sx={{ fontSize: 15.5, fontWeight: 500, borderBottom: "1px solid rgba(255,255,255,0.5)", pb: 0.25, mb: 0.5, transition: "border-color .2s" }}>
@@ -213,6 +213,8 @@ export default function HeroSection({ hero }: { hero?: SiteSettings["hero"] }) {
             display: "flex", gap: 1, flexWrap: "wrap", justifyContent: { xs: "flex-start", md: "flex-end" },
             px: { xs: 3, md: 0 }, pb: { xs: 3.5, md: 0 }, mt: { xs: -5, md: 0 },
             "& a": { fontSize: { xs: 13, md: 14.5 }, px: { xs: 1.6, md: 2.25 }, py: { xs: 0.6, md: 0.9 } },
+            // pills pop in one after another
+            ...Object.fromEntries([1, 2, 3, 4].map((n) => [`& a:nth-of-type(${n})`, enter(850 + n * 90, "translateY(14px) scale(.92)")])),
           }}
         >
           {SOCIALS.map((s) => (

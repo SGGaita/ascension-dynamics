@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
   const project = await loadProject(slug);
   if (!project) return { title: "Project not found", robots: { index: false } };
-  const title = `${project.title} — ${project.category}`;
+  const title = `${project.title} - ${project.category}`;
   return {
     title,
     description: project.shortDesc,

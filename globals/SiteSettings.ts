@@ -4,7 +4,7 @@ export const SiteSettings: GlobalConfig = {
   slug: "site-settings",
   label: "Site Settings",
   admin: {
-    description: "Global settings for the website — navbar, hero section, and contact details.",
+    description: "Global settings for the website - navbar, hero section, and contact details.",
   },
   fields: [
     /* ── Navbar ── */
@@ -18,7 +18,7 @@ export const SiteSettings: GlobalConfig = {
           type: "upload",
           relationTo: "media",
           label: "Logo Image",
-          admin: { description: "Optional. Upload the AD mark only (transparent PNG/SVG, no white text) — the company name is rendered as text next to it." },
+          admin: { description: "Optional. Upload the AD mark only (transparent PNG/SVG, no white text) - the company name is rendered as text next to it." },
         },
         {
           type: "row",
@@ -26,7 +26,7 @@ export const SiteSettings: GlobalConfig = {
             {
               name: "logoWidth",
               type: "number",
-              label: "Logo Width (px) — unused, width follows height",
+              label: "Logo Width (px) - unused, width follows height",
               defaultValue: 88,
               min: 16,
               max: 400,
@@ -79,7 +79,7 @@ export const SiteSettings: GlobalConfig = {
           name: "subtext",
           type: "textarea",
           label: "Sub-text",
-          defaultValue: "From websites that win customers to web & mobile apps and the custom software that runs your business — we plan, design, build and look after digital products people love to use.",
+          defaultValue: "From websites that win customers to web & mobile apps and the custom software that runs your business - we plan, design, build and look after digital products people love to use.",
         },
         {
           name: "badges",

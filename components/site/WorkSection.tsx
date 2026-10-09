@@ -6,7 +6,7 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
 import { useDesign } from "@/components/DesignProvider";
-import { DeviceDuo, Emph, Eyebrow, Glows, Reveal } from "./ui";
+import { DeviceDuo, Emph, Eyebrow, Glows, Parallax, Reveal } from "./ui";
 import type { Project } from "@/lib/projects";
 
 /** Sticky offset of the first card, and the extra offset each following card gets (so edges peek out). */
@@ -53,12 +53,16 @@ function ProjectCard({ project: p, index, total }: { project: Project; index: nu
           </Typography>
         </Box>
 
-        <Typography variant="h3" component="h3" sx={{ fontSize: { xs: "1.9rem", md: "2.5rem" }, fontWeight: 700, color: t.ink, mb: 1.5 }}>
-          {p.title}
-        </Typography>
-        <Typography sx={{ color: t.body, fontSize: { xs: 15.5, md: 16.5 }, lineHeight: 1.55, mb: { xs: 3, md: 3.5 }, maxWidth: 520 }}>
-          {p.shortDesc}
-        </Typography>
+        <Reveal variant="mask">
+          <Typography variant="h3" component="h3" sx={{ fontSize: { xs: "1.9rem", md: "2.5rem" }, fontWeight: 700, color: t.ink, mb: 1.5 }}>
+            {p.title}
+          </Typography>
+        </Reveal>
+        <Reveal delay={120}>
+          <Typography sx={{ color: t.body, fontSize: { xs: 15.5, md: 16.5 }, lineHeight: 1.55, mb: { xs: 3, md: 3.5 }, maxWidth: 520 }}>
+            {p.shortDesc}
+          </Typography>
+        </Reveal>
 
         <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: { xs: 2.5, md: 3 }, mb: 3 }}>
           <Box>
@@ -75,7 +79,7 @@ function ProjectCard({ project: p, index, total }: { project: Project; index: nu
             <Label>Scope of work</Label>
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.75 }}>
               {p.scope.slice(0, 5).map((s, si) => (
-                <Box key={s} component="span" sx={{ display: { xs: si > 2 ? "none" : "inline-block", md: "inline-block" }, fontSize: 13, color: t.body, border: `1px solid ${t.line}`, borderRadius: 999, px: 1.25, py: 0.4 }}>
+                <Box key={s} component="span" sx={{ transition: "background-color .25s, border-color .25s, color .25s", "&:hover": { bgcolor: t.ink, color: "#fff", borderColor: t.ink }, display: { xs: si > 2 ? "none" : "inline-block", md: "inline-block" }, fontSize: 13, color: t.body, border: `1px solid ${t.line}`, borderRadius: 999, px: 1.25, py: 0.4 }}>
                   {s}
                 </Box>
               ))}
@@ -126,7 +130,11 @@ function ProjectCard({ project: p, index, total }: { project: Project; index: nu
       >
         <Glows orb={index % 2 ? "right" : "left"} />
         <Box className="duo" sx={{ position: "relative", width: "100%", maxWidth: 560 }}>
-          <DeviceDuo desktop={p.images.desktop} mobile={p.images.mobile} alt={p.title} />
+          <Reveal variant="scale">
+            <Parallax speed={0.06}>
+              <DeviceDuo desktop={p.images.desktop} mobile={p.images.mobile} alt={p.title} />
+            </Parallax>
+          </Reveal>
         </Box>
       </Box>
     </Box>
@@ -174,21 +182,21 @@ export default function WorkSection({ projects }: { projects: Project[] }) {
   return (
     <Box component="section" id="work" sx={{ pt: { xs: 10, md: 14 }, pb: { xs: 10, md: 14 }, bgcolor: t.bg }}>
       <Container maxWidth="xl" sx={{ px: { xs: 2.5, md: 5 } }}>
-        <Reveal>
           <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 4, flexWrap: "wrap", mb: { xs: 5, md: 7 } }}>
-            <Box>
+            <Reveal variant="mask">
               <Eyebrow index={`(${String(projects.length).padStart(2, "0")})`}>Selected work</Eyebrow>
               <Typography variant="h2" sx={{ fontSize: { xs: "2.4rem", md: "3.6rem" }, fontWeight: 700, lineHeight: 1.05, color: t.ink }}>
                 Platforms
                 <br />
                 <Emph text="*we've shipped*" />
               </Typography>
-            </Box>
+            </Reveal>
+            <Reveal delay={150}>
             <Typography sx={{ color: t.body, maxWidth: 380, fontSize: 15.5 }}>
-              Websites, web apps and custom systems we’ve designed, built and launched — each with its scope, technology and delivery period.
+              Websites, web apps and custom systems we’ve designed, built and launched - each with its scope, technology and delivery period.
             </Typography>
+            </Reveal>
           </Box>
-        </Reveal>
 
         <Box ref={listRef} sx={{ display: "grid", gap: { xs: 3, md: "8vh" } }}>
           {projects.map((p, i) => (

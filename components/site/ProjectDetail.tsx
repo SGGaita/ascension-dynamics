@@ -5,7 +5,7 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import SiteHeader from "./SiteHeader";
 import SiteFooter from "./SiteFooter";
-import { DeviceDuo, Eyebrow, InsetCard, Laptop, OutlinePill, Phone, Reveal, SERIF } from "./ui";
+import { DeviceDuo, Eyebrow, InsetCard, Laptop, OutlinePill, Parallax, Phone, Reveal, SERIF } from "./ui";
 import { useDesign } from "@/components/DesignProvider";
 import type { Project } from "@/lib/projects";
 import type { SiteSettings } from "@/lib/types";
@@ -38,10 +38,10 @@ export default function ProjectDetail({ project: p, next, siteSettings }: Props)
     <>
       <SiteHeader settings={siteSettings?.navbar} phone={contact?.phone} overlay />
       <Box component="main" sx={{ bgcolor: t.bg }}>
-        {/* hero card — same frame as the homepage hero */}
+        {/* hero card - same frame as the homepage hero */}
         <InsetCard orb="left" teal="right">
           <Container maxWidth="xl" sx={{ px: { xs: 3, md: 7 }, pt: { xs: 14, md: 17 }, pb: { xs: 6, md: 8 } }}>
-            <Reveal>
+            <Reveal variant="mask">
               <Box component={Link} href="/#work" sx={{ fontFamily: t.mono, fontSize: 12.5, color: "rgba(255,255,255,0.65)", textDecoration: "none", letterSpacing: "0.04em", "&:hover": { color: "#fff" } }}>
                 ← ALL WORK
               </Box>
@@ -62,9 +62,11 @@ export default function ProjectDetail({ project: p, next, siteSettings }: Props)
             </Reveal>
 
             {/* devices */}
-            <Reveal delay={100}>
+            <Reveal delay={100} variant="scale">
               <Box sx={{ maxWidth: 1000, mx: "auto", mt: { xs: 7, md: 9 } }}>
-                <DeviceDuo desktop={p.images.desktop} mobile={p.images.mobile} alt={p.title} />
+                <Parallax speed={0.05}>
+                  <DeviceDuo desktop={p.images.desktop} mobile={p.images.mobile} alt={p.title} />
+                </Parallax>
               </Box>
             </Reveal>
 
@@ -112,12 +114,16 @@ export default function ProjectDetail({ project: p, next, siteSettings }: Props)
           <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1.9fr 1fr" }, gap: { xs: 3, md: 3 } }}>
             <Reveal>
               <Box sx={{ bgcolor: panelBg, borderRadius: `${t.radius * 1.5}px`, p: { xs: 3, md: 7 }, height: "100%", display: "flex", alignItems: "center" }}>
-                <Laptop src={p.images.desktop} alt={`${p.title} on desktop`} />
+                <Parallax speed={0.04} sx={{ width: "100%" }}>
+                  <Laptop src={p.images.desktop} alt={`${p.title} on desktop`} />
+                </Parallax>
               </Box>
             </Reveal>
             <Reveal delay={100}>
               <Box sx={{ bgcolor: t.heroBg, borderRadius: `${t.radius * 1.5}px`, p: { xs: 5, md: 7 }, height: "100%", display: "flex", justifyContent: "center", alignItems: "center", backgroundImage: `radial-gradient(70% 60% at 50% 40%, ${accent.color}33, transparent 70%)` }}>
-                <Phone src={p.images.mobile} alt={`${p.title} on mobile`} sx={{ width: { xs: "56%", md: "62%" } }} />
+                <Parallax speed={0.08} sx={{ width: { xs: "56%", md: "62%" } }}>
+                  <Phone src={p.images.mobile} alt={`${p.title} on mobile`} />
+                </Parallax>
               </Box>
             </Reveal>
           </Box>
@@ -138,12 +144,12 @@ export default function ProjectDetail({ project: p, next, siteSettings }: Props)
           )}
 
           <Block label="Technology used">
-            <Typography sx={{ fontFamily: t.display, fontWeight: t.displayWeight, letterSpacing: t.displayTracking, fontSize: { xs: "1.4rem", md: "1.8rem" }, lineHeight: 1.3, color: t.ink }}>
+            <Typography component="div" sx={{ fontFamily: t.display, fontWeight: t.displayWeight, letterSpacing: t.displayTracking, fontSize: { xs: "1.4rem", md: "1.8rem" }, lineHeight: 1.3, color: t.ink }}>
               {p.tech.map((x, i) => (
-                <Box component="span" key={x}>
+                <Reveal key={x} delay={i * 90} y={18} sx={{ display: "inline-block" }}>
                   {x}
                   {i < p.tech.length - 1 && <Box component="span" sx={{ color: t.muted, mx: 1.5 }}>/</Box>}
-                </Box>
+                </Reveal>
               ))}
             </Typography>
           </Block>

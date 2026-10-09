@@ -1,5 +1,5 @@
 /**
- * Design tokens — the chosen direction:
+ * Design tokens - the chosen direction:
  * Studio typography (Inter Tight, tight tracking) on the Warm neutral palette,
  * with a single teal accent sampled from the logo.
  */

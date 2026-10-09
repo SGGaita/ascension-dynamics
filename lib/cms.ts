@@ -8,26 +8,26 @@ export type { TestimonialData, ServiceData, SiteSettings } from "./types";
 /* ── Static fallbacks ────────────────────────────────────────── */
 
 export const STATIC_TESTIMONIALS: TestimonialData[] = [
-  { quote: "Ascension Dynamics didn't just build our platform — they fundamentally redesigned how we think about engineering infrastructure. Their technical depth and ability to communicate complex ideas to non-technical stakeholders was extraordinary.", name: "Sarah Okonkwo", role: "CTO, NexaPay Financial Services", emoji: "👩‍💼", rgb: "46,204,138", stat: "2M+ txns/mo", co: "NexaPay" },
-  { quote: "We evaluated seven development firms. Ascension Dynamics was the only team that came back with questions before submitting a proposal — that intellectual curiosity defined the entire engagement. Delivered in 11 weeks, flawlessly.", name: "Dr. Marcus Webb", role: "CEO, MediSync Health Technologies", emoji: "👨‍⚕️", rgb: "232,192,48", stat: "11-week delivery", co: "MediSync" },
-  { quote: "The migration to their cloud architecture cut our infrastructure costs by 38% while improving uptime from 99.2% to 99.97%. Their DevOps team became a true extension of our own — embedded partners, not contractors.", name: "Kwame Asante", role: "VP Engineering, VaultMarket", emoji: "👨‍💻", rgb: "240,114,40", stat: "−38% infra cost", co: "VaultMarket" },
-  { quote: "Our student engagement scores jumped 47% within the first semester. Ascension Dynamics understood the pedagogical nuance behind the technical requirements — that rare blend of domain empathy and engineering excellence is what sets them apart.", name: "Prof. Amara Diallo", role: "Director of Digital Learning, Pan-African University", emoji: "👩‍🏫", rgb: "155,89,245", stat: "+47% engagement", co: "Pan-African Uni" },
+  { quote: "Ascension Dynamics didn't just build our platform - they fundamentally redesigned how we think about engineering infrastructure. Their technical depth and ability to communicate complex ideas to non-technical stakeholders was extraordinary.", name: "Sarah Okonkwo", role: "CTO, NexaPay Financial Services", emoji: "👩‍💼", rgb: "46,204,138", stat: "2M+ txns/mo", co: "NexaPay" },
+  { quote: "We evaluated seven development firms. Ascension Dynamics was the only team that came back with questions before submitting a proposal - that intellectual curiosity defined the entire engagement. Delivered in 11 weeks, flawlessly.", name: "Dr. Marcus Webb", role: "CEO, MediSync Health Technologies", emoji: "👨‍⚕️", rgb: "232,192,48", stat: "11-week delivery", co: "MediSync" },
+  { quote: "The migration to their cloud architecture cut our infrastructure costs by 38% while improving uptime from 99.2% to 99.97%. Their DevOps team became a true extension of our own - embedded partners, not contractors.", name: "Kwame Asante", role: "VP Engineering, VaultMarket", emoji: "👨‍💻", rgb: "240,114,40", stat: "−38% infra cost", co: "VaultMarket" },
+  { quote: "Our student engagement scores jumped 47% within the first semester. Ascension Dynamics understood the pedagogical nuance behind the technical requirements - that rare blend of domain empathy and engineering excellence is what sets them apart.", name: "Prof. Amara Diallo", role: "Director of Digital Learning, Pan-African University", emoji: "👩‍🏫", rgb: "155,89,245", stat: "+47% engagement", co: "Pan-African Uni" },
 ];
 
 export const STATIC_SERVICES: ServiceData[] = [
   { icon: "", title: "Website Design & Development", desc: "Fast, SEO-friendly websites and e-commerce stores that look great on every device and turn visitors into customers.", accentRgb: "25,167,168" },
-  { icon: "", title: "Web Application Development", desc: "Portals, dashboards and SaaS platforms built with React, Next.js and modern back-ends — secure and ready to scale.", accentRgb: "25,167,168" },
+  { icon: "", title: "Web Application Development", desc: "Portals, dashboards and SaaS platforms built with React, Next.js and modern back-ends - secure and ready to scale.", accentRgb: "25,167,168" },
   { icon: "", title: "Mobile App Development", desc: "Android and iOS apps with smooth, native-feeling experiences, built cross-platform to save time and budget.", accentRgb: "25,167,168" },
   { icon: "", title: "Custom Software & Systems", desc: "Management information systems, integrations and automation shaped around how your organisation actually works.", accentRgb: "25,167,168" },
   { icon: "", title: "UI/UX Design", desc: "Research, wireframes and polished interfaces that make your product easy, clear and enjoyable to use.", accentRgb: "25,167,168" },
-  { icon: "", title: "Hosting, Security & Support", desc: "Cloud hosting, backups, monitoring, updates and a team on call — so your website and apps stay fast and safe.", accentRgb: "25,167,168" },
+  { icon: "", title: "Hosting, Security & Support", desc: "Cloud hosting, backups, monitoring, updates and a team on call - so your website and apps stay fast and safe.", accentRgb: "25,167,168" },
 ];
 
 export const DEFAULT_SETTINGS: SiteSettings = {
   navbar: { logoWidth: 88, logoHeight: 56, companyName: "Ascension.Dynamics", navbarHeight: "default" },
   hero: {
     headline: "We design & build *websites|web & mobile apps|custom software*",
-    subtext: "From websites that win customers to web & mobile apps and the custom software that runs your business — we plan, design, build and look after digital products people love to use.",
+    subtext: "From websites that win customers to web & mobile apps and the custom software that runs your business - we plan, design, build and look after digital products people love to use.",
     badges: ["Web Platforms", "Information Systems", "Cloud & DevOps", "Mobile", "Data & Reporting"],
     statusBadge: "Digital product studio",
     ctaPrimary: "Start a Project",
@@ -37,6 +37,16 @@ export const DEFAULT_SETTINGS: SiteSettings = {
 };
 
 /* ── Helpers ─────────────────────────────────────────────────── */
+
+/** House style: plain hyphens instead of em/en dashes, even in CMS-entered text. */
+function plainDashes<T>(value: T): T {
+  if (typeof value === "string") return value.replace(/[\u2013\u2014]/g, "-") as T;
+  if (Array.isArray(value)) return value.map(plainDashes) as T;
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, plainDashes(v)])) as T;
+  }
+  return value;
+}
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 function docToProject(doc: Record<string, any>): Project {
@@ -129,7 +139,7 @@ export async function getProjects(): Promise<Project[]> {
     const result  = await payload.find({ collection: "projects", limit: 50, sort: "order" });
     const docs    = result.docs.filter(isCurrentProject);
     if (!docs.length) return STATIC_PROJECTS;
-    return docs.map(docToProject);
+    return docs.map(docToProject).map(plainDashes);
   } catch { return STATIC_PROJECTS; }
 }
 
@@ -138,7 +148,7 @@ export async function getProjectBySlugCMS(slug: string): Promise<Project | undef
     const payload = await getPayloadClient();
     const result  = await payload.find({ collection: "projects", where: { slug: { equals: slug } }, limit: 1 });
     if (!result.docs.length || !isCurrentProject(result.docs[0])) return undefined;
-    return docToProject(result.docs[0]);
+    return plainDashes(docToProject(result.docs[0]));
   } catch { return undefined; }
 }
 
@@ -156,7 +166,7 @@ export async function getServices(): Promise<ServiceData[]> {
     const payload = await getPayloadClient();
     const result  = await payload.find({ collection: "services", limit: 20, sort: "order" });
     if (!result.docs.length) return STATIC_SERVICES;
-    return result.docs.map(docToService);
+    return result.docs.map(docToService).map(plainDashes);
   } catch { return STATIC_SERVICES; }
 }
 
@@ -164,6 +174,6 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   try {
     const payload = await getPayloadClient();
     const doc     = await payload.findGlobal({ slug: "site-settings" });
-    return docToSettings(doc as Record<string, unknown>);
+    return plainDashes(docToSettings(doc as Record<string, unknown>));
   } catch { return DEFAULT_SETTINGS; }
 }

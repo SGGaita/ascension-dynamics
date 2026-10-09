@@ -8,7 +8,7 @@ import ButtonBase from "@mui/material/ButtonBase";
 import Alert from "@mui/material/Alert";
 import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
 import { useDesign } from "@/components/DesignProvider";
-import { Emph, Eyebrow, InsetCard, Reveal, Squiggle } from "./ui";
+import { Emph, Eyebrow, InsetCard, Reveal, Squiggle, enter } from "./ui";
 import { CONTACT, telHref } from "@/lib/contact";
 
 /* Values below must stay in sync with the mappings in app/api/leads/route.ts */
@@ -20,8 +20,8 @@ const SVCS = [
   { id: "sec", label: "Security" },
   { id: "dat", label: "Data & reporting" },
 ];
-const BUDGETS   = ["< $25k", "$25k–$75k", "$75k–$200k", "$200k+", "Enterprise"];
-const TIMELINES = ["ASAP", "1–3 months", "3–6 months", "6+ months"];
+const BUDGETS   = ["< $25k", "$25k-$75k", "$75k-$200k", "$200k+", "Enterprise"];
+const TIMELINES = ["ASAP", "1-3 months", "3-6 months", "6+ months"];
 const STEPS     = ["You", "Scope", "Brief"];
 
 type F = {
@@ -105,7 +105,7 @@ export default function ContactSection({ contactInfo }: { contactInfo?: { email?
 
   const label = (s: string, err?: string) => (
     <Typography sx={{ fontFamily: t.mono, fontSize: 11.5, letterSpacing: "0.06em", textTransform: "uppercase", color: err ? "#ff8a80" : "rgba(255,255,255,0.5)", mb: 1.5 }}>
-      {s}{err ? ` — ${err}` : ""}
+      {s}{err ? ` - ${err}` : ""}
     </Typography>
   );
 
@@ -113,7 +113,7 @@ export default function ContactSection({ contactInfo }: { contactInfo?: { email?
     <InsetCard id="contact" orb="left" teal="right">
       <Container maxWidth="xl" sx={{ px: { xs: 3, md: 7 }, py: { xs: 9, md: 14 } }}>
         <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: { xs: 6, md: 10 } }}>
-          <Reveal>
+          <Reveal variant="mask">
             <Eyebrow light>Contact</Eyebrow>
             <Typography variant="h2" sx={{ color: "#fff", fontWeight: 700, fontSize: { xs: "2.4rem", md: "3.6rem" }, lineHeight: 1.05, mb: 3 }}>
               Have a project
@@ -155,7 +155,7 @@ export default function ContactSection({ contactInfo }: { contactInfo?: { email?
               <Box sx={{ borderTop: "1px solid rgba(255,255,255,0.18)", pt: 4 }}>
                 {sent ? (
                   <Box sx={{ py: 6 }}>
-                    <Typography variant="h3" sx={{ color: "#fff", fontSize: "2rem", mb: 2 }}>Thank you — brief received.</Typography>
+                    <Typography variant="h3" sx={{ color: "#fff", fontSize: "2rem", mb: 2 }}>Thank you - brief received.</Typography>
                     <Typography sx={{ color: "rgba(255,255,255,0.7)", mb: 4 }}>We&rsquo;ll be in touch within one working day.</Typography>
                     <Pill on={false} onClick={() => setSent(false)}>Send another</Pill>
                   </Box>
@@ -168,7 +168,12 @@ export default function ContactSection({ contactInfo }: { contactInfo?: { email?
                         </Box>
                       ))}
                     </Box>
+                    <Box sx={{ height: 2, bgcolor: "rgba(255,255,255,0.12)", borderRadius: 2, mt: -3, mb: 5, overflow: "hidden" }}>
+                      <Box sx={{ height: "100%", width: `${((step + 1) / STEPS.length) * 100}%`, bgcolor: accent.color, transition: "width .6s cubic-bezier(.2,.7,.2,1)" }} />
+                    </Box>
 
+                    {/* each step slides in from the right */}
+                    <Box key={step} sx={enter(0, "translateX(28px)")}>
                     {step === 0 && (
                       <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" }, gap: 3.5 }}>
                         <TextField label="First name" value={f.fn} onChange={(ev) => set("fn", ev.target.value)} error={!!e.fn} helperText={e.fn} />
@@ -195,6 +200,8 @@ export default function ContactSection({ contactInfo }: { contactInfo?: { email?
                         <TextField label="Reference links (optional)" value={f.links} onChange={(ev) => set("links", ev.target.value)} />
                       </Box>
                     )}
+
+                    </Box>
 
                     {submitError && <Alert severity="error" variant="outlined" sx={{ mt: 3 }}>{submitError}</Alert>}
 

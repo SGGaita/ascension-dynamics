@@ -8,7 +8,7 @@ import { useDesign } from "@/components/DesignProvider";
 export const SERIF = "'Playfair Display', Georgia, serif";
 
 /* ───────────────────────── Emphasis ─────────────────────────
-   "*words*" render in bold italic serif — the hero's signature mix
+   "*words*" render in bold italic serif - the hero's signature mix
    of a bold grotesk with an italic serif, used in every heading.   */
 export function Emph({ text, color }: { text: string; color?: string }) {
   const parts = text.split(/(\*[^*]+\*)/g).filter(Boolean);
@@ -29,37 +29,144 @@ export function Emph({ text, color }: { text: string; color?: string }) {
 
 /* ───────────────────────── Reveal ─────────────────────────
    Fades/slides children in once when they enter the viewport. */
-export function Reveal({ children, delay = 0, y = 24, sx }: { children: React.ReactNode; delay?: number; y?: number; sx?: SxProps<Theme> }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [shown, setShown] = useState(false);
+/** True once the element has scrolled into view (fires once). */
+export function useInView<T extends HTMLElement>(rootMargin = "0px 0px -8% 0px") {
+  const ref = useRef<T>(null);
+  const [inView, setInView] = useState(false);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     if (typeof IntersectionObserver === "undefined") {
-      const id = requestAnimationFrame(() => setShown(true));
+      const id = requestAnimationFrame(() => setInView(true));
       return () => cancelAnimationFrame(id);
     }
     const io = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setShown(true); io.disconnect(); } },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+      ([e]) => { if (e.isIntersecting) { setInView(true); io.disconnect(); } },
+      { rootMargin, threshold: 0.08 },
     );
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [rootMargin]);
+  return [ref, inView] as const;
+}
+
+const EASE = "cubic-bezier(.2,.7,.2,1)";
+
+type RevealVariant = "up" | "mask" | "scale" | "fade" | "left";
+
+/**
+ * Animates children in when they enter the viewport.
+ * - up    : fade + rise (default)
+ * - mask  : wipe-up reveal, great for headings
+ * - scale : fade + gentle zoom, for media
+ * - fade  : opacity only
+ * - left  : slide in from the left
+ */
+export function Reveal({ children, delay = 0, y = 24, variant = "up", sx }: {
+  children: React.ReactNode; delay?: number; y?: number; variant?: RevealVariant; sx?: SxProps<Theme>;
+}) {
+  const [ref, shown] = useInView<HTMLDivElement>();
+  const hidden: Record<RevealVariant, object> = {
+    up: { opacity: 0, transform: `translateY(${y}px)` },
+    mask: { opacity: 0, transform: "translateY(0.6em)", clipPath: "inset(0 0 100% 0)" },
+    scale: { opacity: 0, transform: "scale(0.94)" },
+    fade: { opacity: 0 },
+    left: { opacity: 0, transform: "translateX(-32px)" },
+  };
+  const dur = variant === "mask" ? 1.1 : 0.9;
+  // The observed wrapper is never clipped or transformed, otherwise the browser
+  // could consider a fully clipped element as "not visible" and never reveal it.
+  return (
+    <Box ref={ref} sx={sx}>
+      <Box
+        sx={{
+          ...(shown ? { opacity: 1, transform: "none", clipPath: "inset(0 0 0 0)" } : hidden[variant]),
+          transition: ["opacity", "transform", "clip-path"].map((p) => `${p} ${dur}s ${EASE} ${delay}ms`).join(", "),
+          "@media (prefers-reduced-motion: reduce)": { opacity: 1, transform: "none", clipPath: "none", transition: "none" },
+        }}
+      >
+        {children}
+      </Box>
+    </Box>
+  );
+}
+
+/** A hairline that draws itself from left to right when scrolled into view. */
+export function DrawLine({ color, delay = 0, thickness = 1, sx }: { color: string; delay?: number; thickness?: number; sx?: SxProps<Theme> }) {
+  const [ref, shown] = useInView<HTMLDivElement>();
   return (
     <Box
       ref={ref}
+      aria-hidden
       sx={{
-        opacity: shown ? 1 : 0,
-        transform: shown ? "none" : `translateY(${y}px)`,
-        transition: `opacity .9s cubic-bezier(.2,.7,.2,1) ${delay}ms, transform .9s cubic-bezier(.2,.7,.2,1) ${delay}ms`,
-        "@media (prefers-reduced-motion: reduce)": { opacity: 1, transform: "none", transition: "none" },
+        height: thickness, bgcolor: color, transformOrigin: "left center",
+        transform: shown ? "scaleX(1)" : "scaleX(0)",
+        transition: `transform 1.2s ${EASE} ${delay}ms`,
+        "@media (prefers-reduced-motion: reduce)": { transform: "none", transition: "none" },
         ...sx,
       }}
-    >
-      {children}
+    />
+  );
+}
+
+/** Text that rises in one letter at a time when it enters the viewport. */
+export function SplitLetters({ text, stagger = 40, delay = 0 }: { text: string; stagger?: number; delay?: number }) {
+  const [ref, shown] = useInView<HTMLSpanElement>();
+  return (
+    <Box ref={ref} component="span" aria-label={text} sx={{ display: "inline-block" }}>
+      {Array.from(text).map((ch, i) => (
+        <Box
+          key={i}
+          component="span"
+          aria-hidden
+          sx={{
+            display: "inline-block", whiteSpace: "pre",
+            transform: shown ? "none" : "translateY(0.9em) rotate(6deg)", opacity: shown ? 1 : 0,
+            transition: `transform 1s ${EASE} ${delay + i * stagger}ms, opacity .8s ${EASE} ${delay + i * stagger}ms`,
+            "@media (prefers-reduced-motion: reduce)": { transform: "none", opacity: 1, transition: "none" },
+          }}
+        >
+          {ch}
+        </Box>
+      ))}
     </Box>
   );
+}
+
+/** Moves children slightly against the scroll direction for depth (desktop, motion-safe only). */
+export function Parallax({ children, speed = 0.08, sx }: { children: React.ReactNode; speed?: number; sx?: SxProps<Theme> }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !window.matchMedia("(min-width: 900px)").matches) return;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const r = el.getBoundingClientRect();
+      const offset = (r.top + r.height / 2 - window.innerHeight / 2) * -speed;
+      el.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0)`;
+    };
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [speed]);
+  return <Box ref={ref} sx={{ willChange: "transform", ...sx }}>{children}</Box>;
+}
+
+/** CSS for staggered entrance on page load (hero content, page headers). */
+export function enter(delay: number, from = "translateY(28px)") {
+  return {
+    animation: `ad-enter 1s ${EASE} ${delay}ms both`,
+    "@keyframes ad-enter": { from: { opacity: 0, transform: from }, to: { opacity: 1, transform: "none" } },
+    "@media (prefers-reduced-motion: reduce)": { animation: "none" },
+  };
 }
 
 /* ───────────────────────── Eyebrow ─────────────────────────
@@ -109,7 +216,7 @@ export function Glows({ orb = "left", teal = "right" }: { orb?: "left" | "right"
 }
 
 /* ───────────────────────── InsetCard ─────────────────────────
-   Dark, rounded, inset panel — the hero's frame, reused for key sections. */
+   Dark, rounded, inset panel - the hero's frame, reused for key sections. */
 export function InsetCard({ id, children, orb = "left", teal = "right", bg, sx }: {
   id?: string; children: React.ReactNode; orb?: "left" | "right" | "none"; teal?: "left" | "right"; bg?: string; sx?: SxProps<Theme>;
 }) {
@@ -178,7 +285,7 @@ export function OutlinePill({ href, children, external, dark = true }: { href: s
 export function Laptop({ src, alt, sx }: { src: string; alt: string; sx?: SxProps<Theme> }) {
   return (
     <Box sx={{ position: "relative", width: "100%", ...sx }}>
-      {/* lid — screen is inset absolutely so bezels scale with the lid itself */}
+      {/* lid - screen is inset absolutely so bezels scale with the lid itself */}
       <Box
         sx={{
           position: "relative",
@@ -241,10 +348,10 @@ export function DeviceDuo({ desktop, mobile, alt, phoneSide = "right", sx }: {
 }) {
   return (
     <Box sx={{ position: "relative", width: "100%", pb: "6%", ...sx }}>
-      <Laptop src={desktop} alt={`${alt} — desktop`} sx={{ width: "88%", ml: phoneSide === "right" ? 0 : "12%" }} />
+      <Laptop src={desktop} alt={`${alt} - desktop`} sx={{ width: "88%", ml: phoneSide === "right" ? 0 : "12%" }} />
       <Phone
         src={mobile}
-        alt={`${alt} — mobile`}
+        alt={`${alt} - mobile`}
         sx={{ position: "absolute", width: "23%", bottom: 0, [phoneSide]: "2%" }}
       />
     </Box>

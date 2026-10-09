@@ -1,4 +1,4 @@
-/** Public contact details — used as defaults when the CMS has none. */
+/** Public contact details - used as defaults when the CMS has none. */
 export const CONTACT = {
   email: "hello@ascensiondynamics.io",
   phone: "+254-723-272915",
@@ -11,7 +11,7 @@ export function telHref(phone: string) {
 
 /**
  * Social profiles shown in the hero and footer.
- * ⚠️ CONFIRM: these handles are placeholders — replace with your real profile URLs.
+ * ⚠️ CONFIRM: these handles are placeholders - replace with your real profile URLs.
  */
 export const SOCIALS = [
   { label: "Facebook", href: "https://www.facebook.com/ascensiondynamics" },

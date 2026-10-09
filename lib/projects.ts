@@ -1,10 +1,10 @@
 /**
- * Portfolio projects — static source of truth (also used to seed Payload).
+ * Portfolio projects - static source of truth (also used to seed Payload).
  *
  * Every project carries: description, technology used, year, period, scope of work
  * and laptop + mobile screenshots (public/projects/<slug>-desktop.webp / -mobile.webp).
  *
- * ⚠️  Values marked `// CONFIRM` are best guesses — please correct them.
+ * ⚠️  Values marked `// CONFIRM` are best guesses - please correct them.
  * Confirmed from the live sites (Oct 2026): URLs, what each product does,
  * Next.js + MUI on NBPS & TemplumIS, Next.js on HospitiumRIS, WordPress on Citiscape.
  */
@@ -18,7 +18,7 @@ export interface Project {
   category: string;
   /** Year the project shipped (or started, if ongoing). */
   year: string;
-  /** Engagement period, e.g. "Feb 2025 – May 2025". */
+  /** Engagement period, e.g. "Feb 2025 - May 2025". */
   period: string;
   status: ProjectStatus;
   liveUrl?: string;
@@ -28,7 +28,7 @@ export interface Project {
   shortDesc: string;
   /** Full description for the detail page. */
   description: string;
-  /** Scope of work — what Ascension Dynamics delivered. */
+  /** Scope of work - what Ascension Dynamics delivered. */
   scope: string[];
   /** Notable product features. */
   features: string[];
@@ -47,13 +47,13 @@ export const PROJECTS: Project[] = [
     client: "NBPS Alumni Association",
     category: "Community platform",
     year: "2025", // CONFIRM
-    period: "Jan 2025 – Apr 2025", // CONFIRM
+    period: "Jan 2025 - Apr 2025", // CONFIRM
     status: "Live",
     liveUrl: "https://nbps-alumni.co.ke/",
     accent: "#D81B6A",
-    shortDesc: "A home for Nyandarua Boarding Primary School graduates — reconnecting alumni, running events and funding school projects.",
+    shortDesc: "A home for Nyandarua Boarding Primary School graduates - reconnecting alumni, running events and funding school projects.",
     description:
-      "The NBPS Alumni Association needed one place where former students could reconnect, follow what the association is doing and give back to the school. We designed and built a content-rich, mobile-first platform that brings together events, fundraising projects such as the NBPS Digital Library, a photo gallery, news, fitness and welfare programmes — with registration and donation calls-to-action throughout and rich link previews so every campaign travels further on social media.",
+      "The NBPS Alumni Association needed one place where former students could reconnect, follow what the association is doing and give back to the school. We designed and built a content-rich, mobile-first platform that brings together events, fundraising projects such as the NBPS Digital Library, a photo gallery, news, fitness and welfare programmes - with registration and donation calls-to-action throughout and rich link previews so every campaign travels further on social media.",
     scope: [
       "Discovery and information architecture",
       "UI/UX design for desktop and mobile",
@@ -81,13 +81,13 @@ export const PROJECTS: Project[] = [
     client: "HospitiumRIS", // CONFIRM
     category: "Health research information system",
     year: "2025", // CONFIRM
-    period: "Mar 2025 – Present", // CONFIRM
+    period: "Mar 2025 - Present", // CONFIRM
     status: "Live",
     liveUrl: "https://hospitium.hospitiumris.org/",
     accent: "#19A7A8",
     shortDesc: "A research information system that manages the full research lifecycle in hospitals and health research institutions.",
     description:
-      "HospitiumRIS is integrated digital infrastructure for managing, tracking and improving research in hospitals. It connects clinicians, researchers, ethics committees and funders on one centralised, secure platform — replacing spreadsheets and email chains with structured workflows from proposal to publication. We led the product from requirements through architecture, design, build and rollout, including multilingual support, a dark mode and adjustable text size for accessibility.",
+      "HospitiumRIS is integrated digital infrastructure for managing, tracking and improving research in hospitals. It connects clinicians, researchers, ethics committees and funders on one centralised, secure platform - replacing spreadsheets and email chains with structured workflows from proposal to publication. We led the product from requirements through architecture, design, build and rollout, including multilingual support, a dark mode and adjustable text size for accessibility.",
     scope: [
       "Requirements with research offices and ethics committees",
       "Product design and journeys for each stakeholder role",
@@ -115,13 +115,13 @@ export const PROJECTS: Project[] = [
     client: "TemplumIS",
     category: "Higher-education intelligence",
     year: "2026", // CONFIRM
-    period: "Jan 2026 – Present", // CONFIRM
+    period: "Jan 2026 - Present", // CONFIRM
     status: "Live",
     liveUrl: "https://templum.templumis.org/",
     accent: "#1E2D5A",
-    shortDesc: "Institutional intelligence for universities — enrollment, student success, scholarships, research and rankings in one data layer.",
+    shortDesc: "Institutional intelligence for universities - enrollment, student success, scholarships, research and rankings in one data layer.",
     description:
-      "TemplumIS powers smarter higher education by turning siloed institutional data into a unified intelligence layer. Five integrated modules cover the complete institutional data lifecycle: enrollment and student success, scholarships and financial aid, student support, grants and research, and university rankings — giving leadership live dashboards and early warnings, and giving students self-service tools and timely nudges.",
+      "TemplumIS powers smarter higher education by turning siloed institutional data into a unified intelligence layer. Five integrated modules cover the complete institutional data lifecycle: enrollment and student success, scholarships and financial aid, student support, grants and research, and university rankings - giving leadership live dashboards and early warnings, and giving students self-service tools and timely nudges.",
     scope: [
       "Product strategy and module design",
       "UX for administrators, faculty and students",
@@ -133,10 +133,10 @@ export const PROJECTS: Project[] = [
     ],
     features: [
       "Enrollment & student success with time-to-degree analytics and early-warning dashboards",
-      "Scholarship & financial aid lifecycle — funds, applications, awards, compliance",
+      "Scholarship & financial aid lifecycle - funds, applications, awards, compliance",
       "Student support with milestone tracking, nudges and ticketing",
-      "Grants & research — burn rates, publication mapping, ethics/IRB alerts",
-      "University rankings — indicator readiness, targets and live dashboards",
+      "Grants & research - burn rates, publication mapping, ethics/IRB alerts",
+      "University rankings - indicator readiness, targets and live dashboards",
     ],
     tech: ["Next.js", "React", "Material UI", "Emotion", "PostgreSQL"], // CONFIRM beyond Next.js + MUI
     images: shots("templum-is"),
@@ -147,11 +147,11 @@ export const PROJECTS: Project[] = [
     client: "Citiscape Valuers & Estate Agents Ltd",
     category: "Real estate & valuation",
     year: "2024", // CONFIRM
-    period: "Aug 2024 – Oct 2024", // CONFIRM
+    period: "Aug 2024 - Oct 2024", // CONFIRM
     status: "Live",
     liveUrl: "https://citiscapevaluers.com/",
     accent: "#9BC53D",
-    shortDesc: "A property marketplace and corporate site for a valuation and estate agency — listings, virtual tours and valuation services.",
+    shortDesc: "A property marketplace and corporate site for a valuation and estate agency - listings, virtual tours and valuation services.",
     description:
       "Citiscape Valuers & Estate Agents needed a site that sells properties and builds trust in its valuation and property-management services. We delivered a WordPress platform with a property manager for sale and rental listings (prices, bedrooms and bathrooms), immersive virtual tours, service pages for valuation and property management, a client showcase, an expert blog, and one-tap contact through phone, WhatsApp and social channels.",
     scope: [
@@ -176,7 +176,7 @@ export const PROJECTS: Project[] = [
   },
 ];
 
-/** Slugs of the old demo projects — ignored if they still exist in the CMS. */
+/** Slugs of the old demo projects - ignored if they still exist in the CMS. */
 export const LEGACY_SLUGS = ["nexapay", "medisync", "vaultmarket", "optimesh", "learnforge", "trackfleet"];
 
 export function getProjectBySlug(slug: string): Project | undefined {

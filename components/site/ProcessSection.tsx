@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { useDesign } from "@/components/DesignProvider";
-import { Emph, Eyebrow, Reveal, SERIF } from "./ui";
+import { DrawLine, Emph, Eyebrow, Reveal, SERIF } from "./ui";
 
 const STEPS = [
   { t: "Discover", d: "Workshops with your team to map users, workflows and what success looks like." },
@@ -17,7 +17,7 @@ export default function ProcessSection() {
   return (
     <Box component="section" id="process" sx={{ py: { xs: 10, md: 16 }, bgcolor: t.bg }}>
       <Container maxWidth="xl" sx={{ px: { xs: 2.5, md: 5 } }}>
-        <Reveal>
+        <Reveal variant="mask">
           <Eyebrow>Process</Eyebrow>
           <Typography variant="h2" sx={{ fontSize: { xs: "2.4rem", md: "3.6rem" }, fontWeight: 700, lineHeight: 1.05, color: t.ink, mb: { xs: 6, md: 8 }, maxWidth: 820 }}>
             From first idea
@@ -28,8 +28,9 @@ export default function ProcessSection() {
         <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "repeat(4, 1fr)" }, gap: { xs: 5, md: 4 } }}>
           {STEPS.map((s, i) => (
             <Reveal key={s.t} delay={i * 90}>
-              <Box sx={{ borderTop: `1px solid ${t.ink}`, pt: 3 }}>
-                <Typography sx={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, fontSize: { xs: "2.8rem", md: "3.4rem" }, lineHeight: 1, color: t.ink, opacity: 0.22, mb: 2.5 }}>
+              <DrawLine color={t.ink} delay={i * 140} />
+              <Box sx={{ pt: 3, "&:hover .num": { opacity: 0.9, color: accentInk, transform: "translateX(6px)" } }}>
+                <Typography className="num" sx={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, fontSize: { xs: "2.8rem", md: "3.4rem" }, lineHeight: 1, color: t.ink, opacity: 0.22, mb: 2.5, transition: "opacity .4s, color .4s, transform .5s cubic-bezier(.2,.7,.2,1)" }}>
                   {String(i + 1).padStart(2, "0")}
                 </Typography>
                 <Typography variant="h5" component="h3" sx={{ color: t.ink, mb: 1.25, display: "flex", alignItems: "center", gap: 1 }}>

@@ -58,8 +58,8 @@ export const Leads: CollectionConfig = {
           label: "Budget Range",
           options: [
             { label: "Under $25k",    value: "under-25k" },
-            { label: "$25k – $75k",   value: "25k-75k"   },
-            { label: "$75k – $200k",  value: "75k-200k"  },
+            { label: "$25k - $75k",   value: "25k-75k"   },
+            { label: "$75k - $200k",  value: "75k-200k"  },
             { label: "$200k+",        value: "200k-plus" },
             { label: "Enterprise",    value: "enterprise" },
           ],
@@ -70,8 +70,8 @@ export const Leads: CollectionConfig = {
           label: "Timeline",
           options: [
             { label: "ASAP",         value: "asap"      },
-            { label: "1 – 3 months", value: "1-3mo"     },
-            { label: "3 – 6 months", value: "3-6mo"     },
+            { label: "1 - 3 months", value: "1-3mo"     },
+            { label: "3 - 6 months", value: "3-6mo"     },
             { label: "6+ months",    value: "6mo-plus"  },
           ],
         },

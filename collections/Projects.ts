@@ -31,7 +31,7 @@ export const Projects: CollectionConfig = {
       type: "row",
       fields: [
         { name: "year", type: "text", required: true, admin: { description: "e.g. 2025" } },
-        { name: "period", type: "text", required: true, admin: { description: "e.g. Jan 2025 – Apr 2025" } },
+        { name: "period", type: "text", required: true, admin: { description: "e.g. Jan 2025 - Apr 2025" } },
         {
           name: "status",
           type: "select",
@@ -60,7 +60,7 @@ export const Projects: CollectionConfig = {
       type: "textarea",
       required: true,
       label: "Short description",
-      admin: { description: "1–2 sentences shown on portfolio cards" },
+      admin: { description: "1-2 sentences shown on portfolio cards" },
     },
     {
       name: "description",

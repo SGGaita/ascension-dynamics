@@ -21,7 +21,7 @@ export default function BrandLogo({ height = 56, src = "/logo-mark.png", company
     <Box
       component={Link}
       href="/"
-      aria-label={`${companyName.replace(".", " ")} — home`}
+      aria-label={`${companyName.replace(".", " ")} - home`}
       sx={{ display: "inline-flex", alignItems: "center", gap: 1.5, textDecoration: "none", color: inverse ? "#fff" : t.ink, transition: "color .3s" }}
     >
       <Box component="img" src={src} alt="" sx={{ height: { xs: Math.round(height * 0.8), md: height }, width: "auto", display: "block", flexShrink: 0 }} />

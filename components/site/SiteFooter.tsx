@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import { NAV_LINKS } from "./SiteHeader";
 import { useDesign } from "@/components/DesignProvider";
 import { CONTACT, SOCIALS, telHref } from "@/lib/contact";
-import { Glows, SERIF } from "./ui";
+import { Glows, Reveal, SERIF, SplitLetters } from "./ui";
 
 interface FooterProps {
   email?: string;
@@ -20,18 +20,19 @@ export default function SiteFooter({ email = CONTACT.email, phone = CONTACT.phon
      <Box sx={{ position: "relative", overflow: "hidden", bgcolor: t.heroBg, color: "#fff", pt: { xs: 8, md: 11 }, pb: 4 }}>
       <Glows orb="right" teal="left" />
       <Container maxWidth="xl" sx={{ position: "relative", px: { xs: 3, md: 7 } }}>
+        <Reveal>
         <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "2fr 1fr 1fr" }, gap: { xs: 5, md: 6 }, mb: { xs: 8, md: 12 } }}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 2.5 }}>
             <Box component="img" src="/logo-mark.png" alt="" sx={{ height: { xs: 56, md: 72 }, width: "auto" }} />
             <Typography sx={{ color: "rgba(255,255,255,0.65)", maxWidth: 320, fontSize: 15 }}>
-              Websites, web & mobile apps and custom software — designed, built and cared for.
+              Websites, web & mobile apps and custom software - designed, built and cared for.
             </Typography>
           </Box>
           <Box>
             <Typography sx={{ fontFamily: t.mono, fontSize: 11.5, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)", mb: 2 }}>Explore</Typography>
             <Box sx={{ display: "grid", gap: 1 }}>
               {NAV_LINKS.map((l) => (
-                <Box key={l.href} component={Link} href={l.href} sx={{ color: "rgba(255,255,255,0.85)", textDecoration: "none", "&:hover": { color: "#fff" } }}>{l.label}</Box>
+                <Box key={l.href} component={Link} href={l.href} sx={{ justifySelf: "start", color: "rgba(255,255,255,0.85)", textDecoration: "none", backgroundImage: `linear-gradient(${accent.color}, ${accent.color})`, backgroundSize: "0% 1px", backgroundRepeat: "no-repeat", backgroundPosition: "0 100%", transition: "background-size .4s cubic-bezier(.2,.7,.2,1), color .2s", "&:hover": { color: "#fff", backgroundSize: "100% 1px" } }}>{l.label}</Box>
               ))}
             </Box>
           </Box>
@@ -41,6 +42,7 @@ export default function SiteFooter({ email = CONTACT.email, phone = CONTACT.phon
             <Box component="a" href={telHref(phone)} sx={{ display: "block", mt: 1.5, color: "rgba(255,255,255,0.8)", textDecoration: "none", fontWeight: 700, fontSize: 20, letterSpacing: "-0.01em", "&:hover": { color: "#fff" } }}>{phone}</Box>
           </Box>
         </Box>
+        </Reveal>
 
         {/* oversized wordmark */}
         <Typography
@@ -50,7 +52,8 @@ export default function SiteFooter({ email = CONTACT.email, phone = CONTACT.phon
             fontSize: { xs: "16vw", md: "12vw" }, whiteSpace: "nowrap", color: "#fff", opacity: 0.92, ml: "-0.04em",
           }}
         >
-          Ascension<Box component="span" sx={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, color: accent.color }}>.</Box>
+          <SplitLetters text="Ascension" stagger={55} />
+          <Box component="span" sx={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, color: accent.color, display: "inline-block", animation: "ad-dot 2.4s ease-in-out infinite", "@keyframes ad-dot": { "0%,100%": { transform: "translateY(0)" }, "50%": { transform: "translateY(-0.08em)" } } }}>.</Box>
         </Typography>
 
         <Box sx={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 2, mt: 4, pt: 3, borderTop: "1px solid rgba(255,255,255,0.12)", fontSize: 13, color: "rgba(255,255,255,0.5)" }}>

@@ -15,7 +15,7 @@ export default function ServicesSection({ services }: { services: ServiceData[] 
       <Container maxWidth="xl" sx={{ px: { xs: 3, md: 7 }, py: { xs: 9, md: 14 } }}>
         <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "0.8fr 1.2fr" }, gap: { xs: 5, md: 10 } }}>
           <Box sx={{ position: { md: "sticky" }, top: { md: 140 }, alignSelf: "start" }}>
-            <Reveal>
+            <Reveal variant="mask">
               <Eyebrow light>Services</Eyebrow>
               <Typography variant="h2" sx={{ fontSize: { xs: "2.4rem", md: "3.4rem" }, fontWeight: 700, color: "#fff", mb: 3, lineHeight: 1.05 }}>
                 What we
@@ -23,7 +23,7 @@ export default function ServicesSection({ services }: { services: ServiceData[] 
                 <Emph text="*do best*" />
               </Typography>
               <Typography sx={{ color: "rgba(255,255,255,0.75)", maxWidth: 420, fontSize: 16.5, mb: 4 }}>
-                Website design, web & mobile app development and custom software — one senior team takes you from first workshop to launch, then keeps everything fast, secure and up to date.
+                Website design, web & mobile app development and custom software - one senior team takes you from first workshop to launch, then keeps everything fast, secure and up to date.
               </Typography>
               <Box component={Link} href="/#contact" sx={{ display: "inline-flex", alignItems: "flex-end", gap: 1, color: "#fff", textDecoration: "none" }}>
                 <Squiggle />
@@ -45,6 +45,11 @@ export default function ServicesSection({ services }: { services: ServiceData[] 
                     "&:hover": { pl: { md: 2 } },
                     "&:hover .n": { color: accent.color },
                     "&:hover .t": { fontFamily: "'Playfair Display', Georgia, serif", fontStyle: "italic" },
+                    "&::after": {
+                      content: '""', position: "absolute", left: 0, right: 0, bottom: -1, height: "1px", bgcolor: accent.color,
+                      transform: "scaleX(0)", transformOrigin: "left", transition: "transform .6s cubic-bezier(.2,.7,.2,1)",
+                    },
+                    "&:hover::after": { transform: "scaleX(1)" },
                   }}
                 >
                   <Typography className="n" sx={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: "rgba(255,255,255,0.5)", transition: "color .3s" }}>

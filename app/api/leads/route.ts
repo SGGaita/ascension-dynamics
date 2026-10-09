@@ -12,11 +12,11 @@ export async function POST(req: NextRequest) {
       mob: "mobile", sec: "cybersecurity", dat: "data-analytics",
     };
     const budgetMap: Record<string, string> = {
-      "< $25k": "under-25k", "$25k–$75k": "25k-75k",
-      "$75k–$200k": "75k-200k", "$200k+": "200k-plus", Enterprise: "enterprise",
+      "< $25k": "under-25k", "$25k-$75k": "25k-75k",
+      "$75k-$200k": "75k-200k", "$200k+": "200k-plus", Enterprise: "enterprise",
     };
     const timelineMap: Record<string, string> = {
-      "ASAP": "asap", "1–3 months": "1-3mo", "3–6 months": "3-6mo", "6+ months": "6mo-plus",
+      "ASAP": "asap", "1-3 months": "1-3mo", "3-6 months": "3-6mo", "6+ months": "6mo-plus",
     };
     const sourceMap: Record<string, string> = {
       Google: "google", LinkedIn: "linkedin", Referral: "referral",

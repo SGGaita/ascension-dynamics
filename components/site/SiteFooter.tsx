@@ -44,17 +44,30 @@ export default function SiteFooter({ email = CONTACT.email, phone = CONTACT.phon
         </Box>
         </Reveal>
 
-        {/* oversized wordmark */}
-        <Typography
-          aria-hidden
-          sx={{
-            fontFamily: t.display, fontWeight: t.displayWeight, letterSpacing: "-0.05em", lineHeight: 0.85,
-            fontSize: { xs: "16vw", md: "12vw" }, whiteSpace: "nowrap", color: "#fff", opacity: 0.92, ml: "-0.04em",
-          }}
-        >
-          <SplitLetters text="Ascension" stagger={55} />
-          <Box component="span" sx={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, color: accent.color, display: "inline-block", animation: "ad-dot 2.4s ease-in-out infinite", "@keyframes ad-dot": { "0%,100%": { transform: "translateY(0)" }, "50%": { transform: "translateY(-0.08em)" } } }}>.</Box>
-        </Typography>
+        {/* oversized wordmark: "Ascension." with a faint "Dynamics" layered behind */}
+        <Box sx={{ position: "relative", pt: { xs: "8vw", md: "6vw" } }}>
+          <Typography
+            aria-hidden
+            sx={{
+              position: "absolute", right: { xs: 0, md: "-1vw" }, top: 0, zIndex: 0, pointerEvents: "none",
+              fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, letterSpacing: "-0.02em", lineHeight: 0.85,
+              fontSize: { xs: "15vw", md: "13vw" }, whiteSpace: "nowrap", color: "rgba(255,255,255,0.07)",
+            }}
+          >
+            <SplitLetters text="Dynamics" stagger={45} delay={350} />
+          </Typography>
+          <Typography
+            aria-hidden
+            sx={{
+              position: "relative", zIndex: 1,
+              fontFamily: t.display, fontWeight: t.displayWeight, letterSpacing: "-0.05em", lineHeight: 0.85,
+              fontSize: { xs: "16vw", md: "12vw" }, whiteSpace: "nowrap", color: "#fff", opacity: 0.92, ml: "-0.04em",
+            }}
+          >
+            <SplitLetters text="Ascension" stagger={55} />
+            <Box component="span" sx={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, color: accent.color, display: "inline-block", animation: "ad-dot 2.4s ease-in-out infinite", "@keyframes ad-dot": { "0%,100%": { transform: "translateY(0)" }, "50%": { transform: "translateY(-0.08em)" } } }}>.</Box>
+          </Typography>
+        </Box>
 
         <Box sx={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 2, mt: 4, pt: 3, borderTop: "1px solid rgba(255,255,255,0.12)", fontSize: 13, color: "rgba(255,255,255,0.5)" }}>
           <span>© {new Date().getFullYear()} Ascension Dynamics Ltd.</span>

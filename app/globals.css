@@ -1,0 +1,30 @@
+/* Global styles — visual tokens live in lib/design.ts and the MUI theme built in DesignProvider. */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Keep anchored sections clear of the fixed header */
+section[id] {
+  scroll-margin-top: 80px;
+}
+
+::selection {
+  background: rgba(25, 167, 168, 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

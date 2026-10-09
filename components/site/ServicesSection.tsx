@@ -23,7 +23,7 @@ export default function ServicesSection({ services }: { services: ServiceData[] 
                 <Emph text="*do best*" />
               </Typography>
               <Typography sx={{ color: "rgba(255,255,255,0.75)", maxWidth: 420, fontSize: 16.5, mb: 4 }}>
-                One small senior team takes your product from first workshop to production — design, engineering, hosting and the training that makes it stick.
+                Website design, web & mobile app development and custom software — one senior team takes you from first workshop to launch, then keeps everything fast, secure and up to date.
               </Typography>
               <Box component={Link} href="/#contact" sx={{ display: "inline-flex", alignItems: "flex-end", gap: 1, color: "#fff", textDecoration: "none" }}>
                 <Squiggle />

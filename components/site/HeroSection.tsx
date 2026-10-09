@@ -10,15 +10,10 @@ import { SOCIALS } from "@/lib/contact";
 import type { SiteSettings } from "@/lib/types";
 import { OutlinePill as Pill, SERIF, Squiggle } from "./ui";
 
-/**
- * Hero photo: team working around laptops, by Brooke Cagle on Unsplash
- * (free under the Unsplash License): https://unsplash.com/photos/g1Kr4Ozfoac
- * To self-host, save it as /public/hero.jpg and change PHOTO.src to "/hero.jpg".
- */
+/** Hero photos (self-hosted): wide shot for tablets/desktop, portrait crop for phones. */
 const PHOTO = {
-  src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=2400&q=70",
-  credit: "Brooke Cagle",
-  url: "https://unsplash.com/photos/g1Kr4Ozfoac",
+  desktop: "/hero/hero-desktop.webp",
+  mobile: "/hero/hero-mobile.webp",
 };
 
 /* Copy from older CMS versions that should fall back to the new defaults. */
@@ -125,7 +120,8 @@ function Headline({ text }: { text: string }) {
 }
 
 export default function HeroSection({ hero }: { hero?: SiteSettings["hero"] }) {
-  preload(PHOTO.src, { as: "image", fetchPriority: "high" });
+  preload(PHOTO.desktop, { as: "image", fetchPriority: "high", media: "(min-width: 900px)" });
+  preload(PHOTO.mobile, { as: "image", fetchPriority: "high", media: "(max-width: 899.95px)" });
   const { t, accent } = useDesign();
 
   const headline = hero?.headline && !LEGACY_HEADLINE.test(hero.headline.trim()) ? hero.headline : DEFAULT_HEADLINE;
@@ -149,7 +145,7 @@ export default function HeroSection({ hero }: { hero?: SiteSettings["hero"] }) {
         <Box
           aria-hidden
           sx={{
-            position: "absolute", inset: 0, backgroundImage: `url("${PHOTO.src}")`, backgroundSize: "cover", backgroundPosition: "center 35%",
+            position: "absolute", inset: 0, backgroundImage: { xs: `url("${PHOTO.mobile}")`, md: `url("${PHOTO.desktop}")` }, backgroundSize: "cover", backgroundPosition: { xs: "center 30%", md: "center 40%" },
             animation: "ad-kenburns 22s ease-out forwards",
             "@keyframes ad-kenburns": { from: { transform: "scale(1.12)" }, to: { transform: "scale(1.02)" } },
           }}
@@ -224,15 +220,6 @@ export default function HeroSection({ hero }: { hero?: SiteSettings["hero"] }) {
           ))}
         </Box>
 
-        <Box
-          component="a"
-          href={PHOTO.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          sx={{ display: { xs: "none", md: "block" }, position: "absolute", left: 40, bottom: 20, fontFamily: t.mono, fontSize: 10.5, color: "rgba(255,255,255,0.45)", textDecoration: "none", "&:hover": { color: "#fff" } }}
-        >
-          Photo: {PHOTO.credit} / Unsplash
-        </Box>
       </Box>
     </Box>
   );

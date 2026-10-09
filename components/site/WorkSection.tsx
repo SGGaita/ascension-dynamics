@@ -185,7 +185,7 @@ export default function WorkSection({ projects }: { projects: Project[] }) {
               </Typography>
             </Box>
             <Typography sx={{ color: t.body, maxWidth: 380, fontSize: 15.5 }}>
-              Live products for institutions, communities and businesses — each with its scope, technology and delivery period.
+              Websites, web apps and custom systems we’ve designed, built and launched — each with its scope, technology and delivery period.
             </Typography>
           </Box>
         </Reveal>

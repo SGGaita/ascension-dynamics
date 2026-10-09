@@ -26,6 +26,8 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
   icons: { icon: "/icon-mark.png", apple: "/icon-mark.png" },
   formatDetection: { telephone: true },
+  category: "technology",
+  other: { "og:logo": "/icon-mark.png" },
 };
 
 export const viewport: Viewport = {

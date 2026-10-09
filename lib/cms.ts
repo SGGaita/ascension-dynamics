@@ -15,12 +15,12 @@ export const STATIC_TESTIMONIALS: TestimonialData[] = [
 ];
 
 export const STATIC_SERVICES: ServiceData[] = [
-  { icon: "⚡", title: "Web Application Development", desc: "Full-stack platforms built with React, Next.js, and Node.js — engineered for performance and reliability at scale.", accentRgb: "46,204,138" },
-  { icon: "☁️", title: "Cloud Architecture & DevOps", desc: "AWS, GCP, Azure design, CI/CD pipelines, containerization, and auto-scaling for production-grade deployments.", accentRgb: "78,99,240" },
-  { icon: "🤖", title: "AI & Machine Learning", desc: "Custom AI integrations, LLM-powered workflows, intelligent automation, and data pipelines for actionable insights.", accentRgb: "155,89,245" },
-  { icon: "📱", title: "Mobile Development", desc: "Cross-platform iOS and Android apps using React Native and Flutter — polished UX on robust architecture.", accentRgb: "240,114,40" },
-  { icon: "🔒", title: "Cybersecurity & Compliance", desc: "Security audits, penetration testing, GDPR/SOC 2 readiness, and vulnerability management to keep systems secure.", accentRgb: "232,58,106" },
-  { icon: "📊", title: "Data Engineering & Analytics", desc: "ETL pipelines, data warehouses, real-time dashboards, and BI integration turning raw data into competitive strategy.", accentRgb: "232,192,48" },
+  { icon: "", title: "Website Design & Development", desc: "Fast, SEO-friendly websites and e-commerce stores that look great on every device and turn visitors into customers.", accentRgb: "25,167,168" },
+  { icon: "", title: "Web Application Development", desc: "Portals, dashboards and SaaS platforms built with React, Next.js and modern back-ends — secure and ready to scale.", accentRgb: "25,167,168" },
+  { icon: "", title: "Mobile App Development", desc: "Android and iOS apps with smooth, native-feeling experiences, built cross-platform to save time and budget.", accentRgb: "25,167,168" },
+  { icon: "", title: "Custom Software & Systems", desc: "Management information systems, integrations and automation shaped around how your organisation actually works.", accentRgb: "25,167,168" },
+  { icon: "", title: "UI/UX Design", desc: "Research, wireframes and polished interfaces that make your product easy, clear and enjoyable to use.", accentRgb: "25,167,168" },
+  { icon: "", title: "Hosting, Security & Support", desc: "Cloud hosting, backups, monitoring, updates and a team on call — so your website and apps stay fast and safe.", accentRgb: "25,167,168" },
 ];
 
 export const DEFAULT_SETTINGS: SiteSettings = {
